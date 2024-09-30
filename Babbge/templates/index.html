@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コントローラー</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #info {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .info-item {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        #video-container {
+            margin-top: 20px;
+        }
+
+        #video {
+            width: 320px;
+            height: 240px;
+            border: 1px solid #000;
+        }
+
+        #arrow-keys,
+        #sound-buttons {
+            margin-top: 20px;
+            display: grid;
+            gap: 10px;
+        }
+
+        #arrow-keys {
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+        }
+
+        #sound-buttons {
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+        }
+
+        #special-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 220px;
+        }
+
+        .arrow-btn,
+        .stop-btn,
+        .special-btn,
+        .adjust-btn,
+        .sound-btn {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .arrow-btn:hover,
+        .stop-btn:hover,
+        .special-btn:hover,
+        .adjust-btn:hover,
+        .sound-btn:hover {
+            background-color: #bbb;
+        }
+
+        #slider-container,
+        #special-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #slider {
+            width: 300px;
+        }
+
+        #set-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ccc;
+            border: none;
+            cursor: pointer;
+        }
+
+        #set-button:hover {
+            background-color: #bbb;
+        }
+
+        #special-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 70px);
+            grid-gap: 10px;
+            width: 230px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info">
+        <div class="info-item">現在の値: <span id="current-value">0</span></div>
+        <div class="info-item">オフセット値: <span id="offset-value">95</span></div>
+    </div>
+    <div id="video-container">
+        <img id="video" src="/video_feed" alt="カメラ映像">
+    </div>
+    <div id="arrow-keys">
+        <div></div>
+        <div class="arrow-btn" data-value="1">↑</div>
+        <div></div>
+        <div class="arrow-btn" data-value="3">←</div>
+        <div class="stop-btn" data-value="0">Stop</div>
+        <div class="arrow-btn" data-value="2">→</div>
+        <div></div>
+        <div class="arrow-btn" data-value="4">↓</div>
+        <div></div>
+    </div>
+    <div id="slider-container">
+        <input type="range" id="slider" min="0" max="180" value="95">
+        <button id="set-button">Set</button>
+    </div>
+    <div id="special-buttons">
+        <div class="special-btn" data-value="O">Hello</div>
+        <div class="special-btn" data-value="C">Happy</div>
+        <div class="special-btn" data-value="S">No</div>
+    </div>
+    <div id="sound-buttons">
+        <div class="sound-btn" data-sound="1">1</div>
+        <div class="sound-btn" data-sound="2">2</div>
+        <div class="sound-btn" data-sound="3">3</div>
+        <div class="sound-btn" data-sound="4">4</div>
+        <div class="sound-btn" data-sound="5">5</div>
+        <div class="sound-btn" data-sound="6">6</div>
+        <div class="sound-btn" data-sound="7">7</div>
+        <div class="sound-btn" data-sound="8">8</div>
+        <div class="sound-btn" data-sound="9">9</div>
+    </div>
+
+    <script>
+        const currentValueDisplay = document.getElementById('current-value');
+        const offsetValueDisplay = document.getElementById('offset-value');
+        const slider = document.getElementById('slider');
+        const setButton = document.getElementById('set-button');
+        let activeButton = null;
+
+        // スライダーの値を表示
+        slider.addEventListener('input', () => {
+            offsetValueDisplay.textContent = slider.value;
+        });
+
+        // スライダーの値を決定ボタンで送信
+        setButton.addEventListener('click', () => {
+            const offset = slider.value;
+            fetch('/adjust_offset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    adjustment: offset
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        offsetValueDisplay.textContent = data.offset;
+                    } else {
+                        console.error(data.message);
+                    }
+                });
+        });
+
+        // 矢印キーとStopボタンのイベントリスナー
+        const arrowButtons = document.querySelectorAll('.arrow-btn, .stop-btn');
+        arrowButtons.forEach(button => {
+            button.addEventListener('mousedown', () => {
+                const value = button.getAttribute('data-value');
+                fetch('/send_button', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        value: value
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            currentValueDisplay.textContent = value;
+                            activeButton = button;
+                        } else {
+                            console.error(data.message);
+                        }
+                    });
+            });
+
+            button.addEventListener('mouseup', () => {
+                if (activeButton && activeButton !== button) {
+                    fetch('/send_button', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            value: 0
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                currentValueDisplay.textContent = 0;
+                            } else {
+                                console.error(data.message);
+                            }
+                        });
+                }
+                activeButton = null;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                if (activeButton && activeButton !== button) {
+                    fetch('/send_button', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            value: 0
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                currentValueDisplay.textContent = 0;
+                            } else {
+                                console.error(data.message);
+                            }
+                        });
+                }
+                activeButton = null;
+            });
+        });
+
+        // 特別なボタンのイベントリスナー
+        const specialButtons = document.querySelectorAll('.special-btn');
+        specialButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.getAttribute('data-value');
+                fetch('/send_special_button', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        value: value
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            console.log(`Sent special value: ${value}`);
+                        } else {
+                            console.error(data.message);
+                        }
+                    });
+            });
+        });
+
+        // 音声ボタンのイベントリスナー
+        const soundButtons = document.querySelectorAll('.sound-btn');
+        soundButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const soundId = button.getAttribute('data-sound');
+                fetch('/play_sound', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        sound_id: soundId
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            console.log(`Playing sound ${soundId}`);
+                        } else {
+                            console.error(data.message);
+                        }
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
