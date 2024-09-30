@@ -1,7 +1,6 @@
 import tweepy
 import config
 
-# config.pyからAPIキーとトークンを読み込む
 api_key = config.TWEETER_API_KEY
 api_secret_key = config.TWEETER_API_SECRET_KEY
 access_token = config.TWEETER_ACCESS_TOKEN
