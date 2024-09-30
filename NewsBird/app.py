@@ -7,32 +7,28 @@ import twitter
 import gemini
 import news_driver
 
-# JSONファイルからスケジュール時間を読み込む
 def load_schedule(filename="schedule.json"):
     with open(filename, 'r', encoding='utf-8') as file:
         schedule_data = json.load(file)
     return schedule_data['times']
 
-# プロンプトをファイルから読み込む
 def read_prompt_from_file(filename):
     with open(filename, 'r', encoding='utf-8') as file:
         prompt = file.read().strip()
     return prompt
 
-# 記事を取得してタイトルとサマリーを返す
 def get_article(url):
     try:
         article = Article(url)
         article.download()
         article.parse()
         title = article.title
-        summary = article.text[:300]  # summaryがない場合、テキストの最初の300文字をサマリーとして使用
+        summary = article.text[:300]
         return title, summary
     except Exception as e:
         print(f"Error occurred while processing the article: {e}")
         return None, None
 
-# ランダムにニュースソースを選び、以前の選択を除外するように改良
 previous_choice = None
 
 def post_news_to_x():
@@ -65,12 +61,10 @@ def post_news_to_x():
         send_text = f"★TechNews★\n{response}\nURL: {url}"
         print(send_text)
 
-        # Twitter APIを使用して投稿
         # twitter.create_tweet(send_text)  # Xに投稿
     else:
         print("記事の取得に失敗しました。")
 
-# 指定された時間に基づいてスケジュールを設定
 def schedule_posts():
     times = load_schedule()
     
@@ -81,6 +75,5 @@ def schedule_posts():
         schedule.run_pending()
         time.sleep(1)
 
-# スケジューリング開始
 if __name__ == "__main__":
     schedule_posts()
