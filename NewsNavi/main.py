@@ -8,10 +8,8 @@ import asyncio
 import random
 from datetime import datetime, timedelta
 
-# 各ニュースサイトのドライバー
 import news_driver
 
-# 投稿処理が進行中かどうかを示すフラグ
 is_task_running = False
 
 def get_article(url):
@@ -58,19 +56,15 @@ def read_send_times(filename):
         data = json.load(file)
     return [datetime.strptime(time, "%H:%M").time() for time in data["send_times"]]
 
-# GEMINIの設定
 genai.configure(api_key=config.GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
-# DISCORDの設定
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# ファイルからプロンプトを読み込む
 prompt_file = 'prompt.txt'
 prompt = read_prompt(prompt_file)
 
-# ニュースサイトのドライバー関数リストと使用された関数のセット
 driver_functions = [
     news_driver.yahoo,
     news_driver.techable,
@@ -100,14 +94,12 @@ async def send_scheduled_message(channel, send_times):
         
         await discord.utils.sleep_until(next_time)
         
-        if is_task_running:  # 投稿処理が進行中の場合はスキップ
+        if is_task_running:
             continue
 
-        # タスク開始フラグをセット
         is_task_running = True
 
         try:
-            # 使用されていない関数をランダムに選択
             available_functions = list(set(driver_functions) - used_functions)
             if not available_functions:
                 used_functions.clear()
@@ -120,29 +112,26 @@ async def send_scheduled_message(channel, send_times):
             #await channel.send(message)
             await channel.send(generate_text(prompt, selected_function))
         finally:
-            # タスク終了フラグをリセット
             is_task_running = False
 
 @bot.event
 async def on_ready():
     print("Discord-Bot ready!")
     channel = bot.get_channel(config.ALLOWED_CHANNEL_ID)
-    send_times = read_send_times('send_times.json')  # 外部ファイルから送信時間を読み込む
+    send_times = read_send_times('send_times.json') 
     asyncio.create_task(send_scheduled_message(channel, send_times))
 
 @bot.command()
 async def post_news(ctx):
     global used_functions, is_task_running
     
-    if is_task_running:  # 投稿処理が進行中の場合はスキップ
+    if is_task_running: 
         await ctx.send("現在、別のタスクが進行中です。しばらくお待ちください。")
         return
     
-    # タスク開始フラグをセット
     is_task_running = True
 
     try:
-        # 使用されていない関数をランダムに選択
         available_functions = list(set(driver_functions) - used_functions)
         if not available_functions:
             used_functions.clear()
@@ -153,7 +142,6 @@ async def post_news(ctx):
 
         await ctx.send(generate_text(prompt, selected_function))
     finally:
-        # タスク終了フラグをリセット
         is_task_running = False
 
 @bot.command()
