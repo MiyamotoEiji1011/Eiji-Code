@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/button.css">
+
+    <link rel="icon" href="favicon.ico">
+    <meta name="description" content="進行中のプロジェクトを掲載。NPO団体の設立計画、ゲーム開発チーム">
+    <title>宮本映児 -プロジェクト-</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <header>
+        <div class="logotype">EIJI-MIYAMOTO<span class="red">*</span></div>
+        <nav>
+            <input id="menu__toggle" type="checkbox" />
+            <label class="menu__btn" for="menu__toggle">
+                <span></span>
+            </label>
+            <ul class="menu__box">
+                <li><a class="menu__item" href="index.html">ホーム</a></li>
+                <li><a class="menu__item" href="article.html">記事</a></li>
+                <li><a class="menu__item" href="career.html">経歴</a></li>
+                <li><a class="menu__item" href="project.html"><span class="red">プロジェクト</span></a></li>
+                <li><a class="menu__item" href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1 class="title">
+        <span>P</span>
+        <span>r</span>
+        <span>o</span>
+        <span>j</span>
+        <span>e</span>
+        <span>c</span>
+        <span>t</span>
+        <span>&nbsp;</span>
+        <span>/</span>
+        <span>&nbsp;</span>
+        <span>プ</span>
+        <span>ロ</span>
+        <span>ジ</span>
+        <span>ェ</span>
+        <span>ク</span>
+        <span>ト</span>
+    </h1>
+
+    <nav class="project-container">
+        <div class="horizontal-line"></div>
+        <div class="fadeUpTrigger project-content">
+            <h2>NPO団体の設立計画 (進行中)</h2>
+            <p class="project-content-text">
+                モノづくりに興味・関心を持っている人、モノづくりを行っているエンジニアなどを繋げる非営利団体の設立を進行中。主な活動内容は若い世代やモノづくりに興味・関心がある人にワークショップなどで技術を教える。また、エンジニア同士での交流会により幅広い技術の繋がりを作り個々の技術力を伸ばす。
+            </p>
+            <a href="article.html" class="btn red">記事を読む</a>
+            <img id="project-IconImage" src="img/icon1.png" alt="IconImage">
+        </div>
+        <div class="fadeUpTrigger project-content">
+            <h2>ゲーム開発チーム（検討中）</h2>
+            <p class="project-content-text">
+                近年のゲーム業界は新たなデバイス、斬新なアイデアなどを基にしたゲームが多く存在する。そのため、注目を浴びるゲームというものは今までより格段にハードルが上がっている。そこで、革新的な技術を持たないゲーム開発チームを結成しようと考えた。「最低限の技術でも注目を浴びるゲーム」を目的とし、人気のゲームをオマージュすることでインフルエンサーの話題として提供することができると考えている。
+            </p>
+            <a href="article.html" class="btn red">記事を読む</a>
+            <img id="project-IconImage" src="img/icon1.png" alt="IconImage">
+        </div>
+        <div class="horizontal-line"></div>
+    </nav>
+
+    <footer>
+        <p>-Email-<br>eiji1011.miyamoto@gmail.com</p>
+        <p>-Follow Me-<br>X:@EIJI_1011</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/button.js"></script>
+    <script src="js/title.js"></script>
+    <script src="js/fadeanim.js"></script>
+</body>
+
+</html>

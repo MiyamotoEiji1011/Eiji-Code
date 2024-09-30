@@ -1,0 +1,497 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/*テキストフォント*/
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@300&family=Noto+Serif+JP:wght@700&display=swap');
+/*
+font-family: 'DotGothic16', sans-serif;
+font-family: 'Noto Sans JP', sans-serif;
+font-family: 'Noto Serif JP', serif;
+*/
+
+/*背景UI設定*/
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* ------------Home設定---------- */
+.home-container {
+  background-color: rgba(200, 200, 200, 0.537);
+  border-radius: 30px;
+  position: relative;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 15px;
+}
+
+#home-IconImage {
+  width: 33%;
+  height: auto;
+  border-radius: 50%;
+
+  @media screen and (max-width:480px) {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.home-container h2 {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.home-text {
+  font-family: 'Noto Serif JP', serif;
+  position: absolute;
+  top: 30%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  font-size: 2.5vw;
+  width: 100%;
+  height: 50%;
+  text-align: left;
+
+  @media screen and (max-width:480px) {
+    position: relative;
+    left: 0%;
+    transform: translate(0%, 0%);
+    color: #333;
+    font-size: 4vw;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+  }
+}
+
+/* ------------Career設定---------- */
+.career-container {
+  position: relative;
+  display: block;
+  margin: 15px;
+  background-color: #c6c6c62f;
+}
+
+.career-year-text {
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 25px;
+  text-align: left;
+  display: inline-block;
+
+  @media screen and (max-width:480px) {
+    display: block;
+    font-size: 20px;
+    margin: 0.5em;
+  }
+}
+
+.career-text {
+  position: relative;
+  top: 0;
+  left: 1em;
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 25px;
+  display: inline-block;
+
+  @media screen and (max-width:480px) {
+    left: 0em;
+    display: block;
+    font-size: 23px;
+    margin: 0.5em;
+  }
+}
+
+.career-content-text {
+  position: relative;
+  left: 1em;
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 20px;
+  text-align: left;
+  width: 90%;
+
+  @media screen and (max-width:480px) {
+    left: 1em;
+    font-size: 18px;
+  }
+}
+
+/* ------------Project設定---------- */
+.project-container {
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  background-color: #acacac52;
+  padding: 10px;
+}
+
+.project-content {
+  margin-top: 10%;
+  margin-bottom: 20%;
+}
+
+#project-IconImage {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  top: 20%;
+  left: 70%;
+
+  @media screen and (max-width:480px) {
+    position: relative;
+    width: 50%;
+    height: auto;
+    top: 0%;
+    left: 0%;
+    transform: translate(50%, 0%);
+  }
+}
+
+.project-container h2 {
+  position: relative;
+  font-family: 'Noto Serif JP', bold;
+  color: #333;
+  font-size: 25px;
+  text-align: left;
+  left: 1em;
+  margin-bottom: 1em;
+
+  @media screen and (max-width:480px) {
+    font-size: 20px;
+    left: 0em;
+  }
+}
+
+.project-content-text {
+  position: relative;
+  margin-top: 0em;
+  left: 1em;
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 18px;
+  text-align: left;
+  vertical-align: top;
+  width: 60%;
+
+  @media screen and (max-width:480px) {
+    width: 100%;
+    left: 0em;
+  }
+}
+
+/* ------------Contact設定---------- */
+.contact-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  background-color: #e5ffff9a;
+}
+
+.contact-title-text {
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 20px;
+  position: relative;
+  left: 0%;
+  text-align: center;
+  display: inline-block;
+  margin: 0%;
+  margin-top: 2%;
+
+  @media screen and (max-width:480px) {}
+}
+
+.contact-content-text {
+  position: relative;
+  left: 0%;
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 25px;
+  text-align: left;
+  width: 90%;
+  margin: 0%;
+
+  @media screen and (max-width:480px) {}
+}
+
+/* ------------Article設定---------- */
+.article-container {
+  background-color: rgba(200, 200, 200, 0.283);
+  border-style: solid;
+  border-color: #919191;
+  border-radius: 10px;
+  position: relative;
+  top: 25px;
+  left: 5%;
+  width: 60%;
+  padding: 15px;
+  margin-bottom: 80px;
+}
+
+.article-side-container {
+  background-color: rgba(200, 200, 200, 0.283);
+  border-style: solid;
+  border-color: #919191;
+  border-radius: 10px;
+  position: fixed;
+  top: 23%;
+  right: 5%;
+  width: 20%;
+  padding: 15px;
+  margin-bottom: 80px;
+}
+
+.article-content {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  background-color: #acacac3c;
+}
+
+@media screen and (max-width: 767px) {
+  .article-container {
+    width: 87%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .article-side-container {
+    display: none;
+  }
+}
+
+#article-IconImage {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  top: 20%;
+  left: 70%;
+
+  @media screen and (max-width:480px) {
+    position: relative;
+    width: 50%;
+    height: auto;
+    top: 0%;
+    left: 0%;
+    transform: translate(50%, 0%);
+  }
+}
+
+.article-content h2 {
+  position: relative;
+  font-family: 'Noto Serif JP', bold;
+  color: #333;
+  font-size: 25px;
+  text-align: left;
+  left: 1em;
+  margin-bottom: 1em;
+
+  @media screen and (max-width:480px) {
+    font-size: 20px;
+    left: 1em;
+  }
+}
+
+.article-content-text {
+  position: relative;
+  margin-top: 0em;
+  left: 1em;
+  font-family: 'Noto Serif JP', serif;
+  color: #333;
+  font-size: 18px;
+  text-align: left;
+  vertical-align: top;
+  width: 60%;
+
+  @media screen and (max-width:480px) {
+    width: 100%;
+    left: 0em;
+  }
+}
+
+.article-button-container {
+  @media screen and (max-width:480px) {
+    display: block;
+  }
+}
+
+.article-button-container a {
+  text-align: center;
+  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  display: block;
+  margin: 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 20px 30px;
+
+  @media screen and (max-width:480px) {
+    display: block;
+    margin: 10%;
+  }
+
+}
+
+.article-button-container a.button {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+.article-button-container a.button:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+
+.article-button-container a.button2 {
+  background-color: rgba(126, 216, 247, 0.462);
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+.article-button-container a.button2:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
+}
+
+/* ------------共通設定---------- */
+.horizontal-line {
+  border: none;
+  height: 1.5px;
+  background-color: #a0a0a0;
+  margin: 10px 0;
+}
+
+/*フッター設定*/
+footer {
+  width: 100%;
+  background-color: #89c7de;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+
+  position: relative;
+  bottom: 0;
+}
+
+footer p {
+  display: inline-block;
+  margin: 5px 20px;
+}
+
+/*フェードイン*/
+.fadeUp {
+  animation-name: fadeUpAnime;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUpAnime {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeUpTrigger {
+  opacity: 0;
+}
+
+/*タイトル*/
+.title {
+  display: flex;
+  overflow: hidden;
+  color: #aa8f7b;
+  margin: 10px;
+}
+
+.title span {
+  display: block;
+  transform: translate(0, 105%);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+}
+
+.title.-visible span {
+  transform: translate(0, 0);
+}
+
+.title span:nth-child(2) {
+  transition-delay: 0.06s;
+}
+
+.title span:nth-child(3) {
+  transition-delay: 0.12s;
+}
+
+.title span:nth-child(4) {
+  transition-delay: 0.18s;
+}
+
+.title span:nth-child(5) {
+  transition-delay: 0.24s;
+}
+
+.title span:nth-child(6) {
+  transition-delay: 0.30s;
+}
+
+.title span:nth-child(7) {
+  transition-delay: 0.36s;
+}
+
+.title span:nth-child(8) {
+  transition-delay: 0.42s;
+}
+
+.title span:nth-child(9) {
+  transition-delay: 0.48s;
+}
+
+.title span:nth-child(10) {
+  transition-delay: 0.54s;
+}
+
+.title span:nth-child(11) {
+  transition-delay: 0.6s;
+}
+
+.title span:nth-child(12) {
+  transition-delay: 0.66s;
+}
+
+.title span:nth-child(13) {
+  transition-delay: 0.72s;
+}
+
+.title span:nth-child(14) {
+  transition-delay: 0.78s;
+}
+
+.title span:nth-child(15) {
+  transition-delay: 0.84s;
+}
+
+.title span:nth-child(16) {
+  transition-delay: 0.90s;
+}

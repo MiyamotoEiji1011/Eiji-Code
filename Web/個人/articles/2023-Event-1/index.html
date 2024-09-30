@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ページ移動サンプル</title>
+  <script>
+    // ページが読み込まれたときに実行される関数
+    window.onload = function() {
+      // 確認メッセージを表示する関数
+      function confirmNavigation() {
+        return confirm("サイトが変更されています。\n移動しますか？");
+      }
+
+      if (confirmNavigation()) {
+        window.location.href = "../2023/2023-12-27/index.html";
+      } else {
+        alert("ページ移動がキャンセルされました。");
+      }
+    };
+  </script>
+</head>
+<body>
+    
+</body>
+</html>
