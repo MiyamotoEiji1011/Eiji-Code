@@ -2,19 +2,16 @@ from flask import Flask, render_template, Response, request, jsonify
 import cv2
 import serial
 import time
-import threading
 import os
 from pydub import AudioSegment
 from pydub.playback import play
 
 app = Flask(__name__)
 
-# シリアルポートの設定
-ser1 = serial.Serial('COM15', 9600)  # 第一のArduinoのシリアルポート
-ser2 = serial.Serial('COM16', 9600)  # 第二のArduinoのシリアルポート
-time.sleep(2)  # シリアルポートが安定するまで待機
+ser1 = serial.Serial('COM15', 9600)
+ser2 = serial.Serial('COM16', 9600)
+time.sleep(2)
 
-# 音声ファイルが保存されているフォルダ
 SOUNDS_FOLDER = 'audio'
 
 @app.route('/')
@@ -72,22 +69,19 @@ def play_sound():
     sound_id = data.get('sound_id')
     
     try:
-        # 音声ファイルのパスを構築
         file_path = os.path.join(SOUNDS_FOLDER, f"sound{sound_id}.wav")
         
         if not os.path.exists(file_path):
             return jsonify({'status': 'error', 'message': 'File not found'})
         
-        # 音声ファイルを再生
         sound = AudioSegment.from_file(file_path)
         play(sound)
         return jsonify({'status': 'success'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
 
-# カメラ映像をキャプチャするための関数
 def gen_frames():
-    camera = cv2.VideoCapture(0)  # カメラのデバイスインデックスは0
+    camera = cv2.VideoCapture(0)
     while True:
         success, frame = camera.read()
         if not success:
@@ -103,4 +97,4 @@ def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)  # リローダーを無効にするため debug=False
+    app.run(host='0.0.0.0', port=5000, debug=False)
